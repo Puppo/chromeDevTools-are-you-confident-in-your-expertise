@@ -9,20 +9,26 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@devtools-demo/api": "file:../../packages/api",
     "@tanstack/react-query": "^5.85.5",
+    "@tanstack/react-query-devtools": "^5.85.5",
     "next": "15.5.0",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@eslint/js": "^9.34.0",
     "@tailwindcss/postcss": "^4",
+    "@tanstack/eslint-plugin-query": "^5.83.1",
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
+    "eslint": "^9.34.0",
     "eslint-config-next": "15.5.0",
+    "eslint-config-prettier": "^10.1.8",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.41.0"
   }
 }
