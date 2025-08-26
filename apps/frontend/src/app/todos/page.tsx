@@ -1,38 +1,16 @@
-import { Suspense } from 'react';
-import DevToolsShowcase from '../../components/DevToolsShowcase';
-import TodoContainer from './components/TodoContainer';
-import TodoSkeleton from './components/TodoSkeleton';
-
-// This function fetches todos from the API
-async function getTodos() {
-  // In a real app, this would fetch from your backend
-  // For demo purposes, we'll use the API route
-  try {
-    const response = await fetch('http://localhost:3000/api/todos', {
-      cache: 'no-store', // Disable caching to always get fresh data
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch todos');
-    }
-    
-    const data = await response.json();
-    return data.todos;
-  } catch (error) {
-    // Fallback to default todos if API fails
-    console.error('Failed to fetch todos, using fallback data:', error);
-    return [
-      { id: '1', text: 'Open Chrome DevTools (F12)', completed: false, createdAt: new Date().toISOString() },
-      { id: '2', text: 'Go to Network tab', completed: false, createdAt: new Date().toISOString() },
-      { id: '3', text: 'Monitor API requests in real-time', completed: false, createdAt: new Date().toISOString() },
-      { id: '4', text: 'Check Performance tab for metrics', completed: false, createdAt: new Date().toISOString() },
-      { id: '5', text: 'Use Console for debugging', completed: false, createdAt: new Date().toISOString() },
-    ];
-  }
-}
+import { getTodos } from '@/api/todos';
+import DevToolsShowcase from '@/components/DevToolsShowcase';
+import { Todos } from '@/components/todos/Todos';
+import { QUERY_KEYS } from '@/constants/api';
+import { getQueryClient } from '@/providers/react-query/get-query-client';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 export default async function TodosPage() {
-  const initialTodos = await getTodos();
+  const queryClient = getQueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: QUERY_KEYS.TODOS,
+    queryFn: getTodos,
+  });
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
@@ -55,9 +33,9 @@ export default async function TodosPage() {
           </div>
         </div>
 
-        <Suspense fallback={<TodoSkeleton />}>
-          <TodoContainer initialTodos={initialTodos} />
-        </Suspense>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <Todos />
+        </HydrationBoundary>
 
         <DevToolsShowcase />
       </div>

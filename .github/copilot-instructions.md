@@ -25,7 +25,6 @@ chromeDevTools-are-you-confident-in-your-expertise/
 │       │   │   └── api/        # Next.js API routes
 │       │   └── components/     # Reusable React components
 │       ├── package.json        # Frontend dependencies
-│       └── tailwind.config.ts  # Tailwind CSS configuration
 └── package.json                # Root workspace configuration
 ```
 

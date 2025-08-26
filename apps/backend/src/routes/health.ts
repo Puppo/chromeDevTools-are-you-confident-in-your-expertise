@@ -1,4 +1,4 @@
-import { FastifyInstance } from "fastify";
+import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod/v4";
 
 const ResponseSchema = z.object({
@@ -7,7 +7,7 @@ const ResponseSchema = z.object({
   uptime: z.number(),
 });
 
-export async function healthRoutes(fastify: FastifyInstance) {
+export const healthRoutes: FastifyPluginAsyncZod = async function(fastify) {
   fastify.get('/', {
       schema: {
         tags: ['health'],

@@ -10,11 +10,10 @@ export interface Todo {
 }
 
 interface TodoContainerProps {
-  initialTodos: Todo[];
+  todos: Todo[];
 }
 
-const TodoContainer = ({ initialTodos }: TodoContainerProps) => {
-  const [todos, setTodos] = useState<Todo[]>(initialTodos);
+const TodoContainer = ({ todos }: TodoContainerProps) => {
   const [newTodoText, setNewTodoText] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
@@ -53,15 +52,15 @@ const TodoContainer = ({ initialTodos }: TodoContainerProps) => {
 
       if (response.ok) {
         const data = await response.json();
-        setTodos(prev => [...prev, data.todo]);
+        // setTodos(prev => [...prev, data.todo]);
       } else {
         // Remove optimistic update on failure
-        setTodos(prev => prev);
+        // setTodos(prev => prev);
         console.error('Failed to add todo');
       }
     } catch (error) {
       // Remove optimistic update on failure
-      setTodos(prev => prev);
+      // setTodos(prev => prev);
       console.error('Error adding todo:', error);
     } finally {
       setIsAdding(false);
@@ -75,11 +74,11 @@ const TodoContainer = ({ initialTodos }: TodoContainerProps) => {
     setIsUpdating(id);
     
     // Optimistic update
-    setTodos(prev =>
-      prev.map(t =>
-        t.id === id ? { ...t, completed: !t.completed } : t
-      )
-    );
+    // setTodos(prev =>
+    //   prev.map(t =>
+    //     t.id === id ? { ...t, completed: !t.completed } : t
+    //   )
+    // );
 
     try {
       const response = await fetch('/api/todos', {
@@ -95,20 +94,20 @@ const TodoContainer = ({ initialTodos }: TodoContainerProps) => {
 
       if (!response.ok) {
         // Revert optimistic update on failure
-        setTodos(prev =>
-          prev.map(t =>
-            t.id === id ? { ...t, completed: todo.completed } : t
-          )
-        );
+        // setTodos(prev =>
+        //   prev.map(t =>
+        //     t.id === id ? { ...t, completed: todo.completed } : t
+        //   )
+        // );
         console.error('Failed to update todo');
       }
     } catch (error) {
       // Revert optimistic update on failure
-      setTodos(prev =>
-        prev.map(t =>
-          t.id === id ? { ...t, completed: todo.completed } : t
-        )
-      );
+      // setTodos(prev =>
+      //   prev.map(t =>
+      //     t.id === id ? { ...t, completed: todo.completed } : t
+      //   )
+      // );
       console.error('Error updating todo:', error);
     } finally {
       setIsUpdating(null);
@@ -118,7 +117,7 @@ const TodoContainer = ({ initialTodos }: TodoContainerProps) => {
   const deleteTodo = async (id: string) => {
     // Optimistic update
     const originalTodos = todos;
-    setTodos(prev => prev.filter(todo => todo.id !== id));
+    // setTodos(prev => prev.filter(todo => todo.id !== id));
 
     try {
       const response = await fetch(`/api/todos?id=${id}`, {
@@ -127,12 +126,12 @@ const TodoContainer = ({ initialTodos }: TodoContainerProps) => {
 
       if (!response.ok) {
         // Revert on failure
-        setTodos(originalTodos);
+        // setTodos(originalTodos);
         console.error('Failed to delete todo');
       }
     } catch (error) {
       // Revert on failure
-      setTodos(originalTodos);
+      // setTodos(originalTodos);
       console.error('Error deleting todo:', error);
     }
   };
