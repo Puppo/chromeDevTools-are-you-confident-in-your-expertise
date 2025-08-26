@@ -21,11 +21,11 @@ export const UpdateTodoSchema = z.object({
   completed: z.boolean().optional(),
 });
 
-export const TodoQuerySchema = z.object({
+export const TodoParamsSchema = z.object({
   id: z.uuid(),
 });
 
 export type Todo = z.infer<typeof TodoSchema>;
 export type CreateTodo = z.infer<typeof CreateTodoSchema>;
 export type UpdateTodo = z.infer<typeof UpdateTodoSchema>;
-export type TodoQuery = z.infer<typeof TodoQuerySchema>;
+export type TodoParams = z.infer<typeof TodoParamsSchema>;
