@@ -1,0 +1,41 @@
+{
+  "name": "@devtools-demo/api",
+  "version": "1.0.0",
+  "description": "Shared API schemas and types for Chrome DevTools demo project",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "zod",
+    "schemas",
+    "types",
+    "api",
+    "devtools"
+  ],
+  "author": "DevTools Demo",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^4.1.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  },
+  "files": [
+    "dist"
+  ]
+}
