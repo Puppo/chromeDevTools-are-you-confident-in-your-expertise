@@ -27,65 +27,11 @@ This monorepo demonstrates the power of Chrome DevTools through practical, real-
 ```
 📦 Monorepo Structure
 ├── 🔧 apps/
-│   ├── 🚀 backend/              # Fastify API Server
-│   │   ├── src/
-│   │   │   ├── server.ts        # Main server with health checks
-│   │   │   ├── config/          # Logger and configuration
-│   │   │   │   └── logger.ts    # Pino logger setup
-│   │   │   └── routes/          # API endpoints
-│   │   │       ├── index.ts     # Route registration
-│   │   │       ├── health.ts    # Health check endpoint
-│   │   │       └── todos.ts     # Todo CRUD operations
-│   │   ├── package.json
-│   │   ├── tsconfig.json
-│   │   └── eslint.config.mjs
-│   └── 💻 frontend/             # Next.js React App
-│       ├── src/
-│       │   ├── app/             # App Router (Next.js 14+)
-│       │   │   ├── page.tsx     # Hero landing page
-│       │   │   ├── layout.tsx   # Root layout with navigation
-│       │   │   ├── globals.css  # Global Tailwind styles
-│       │   │   ├── todos/       # Todo list with SSR
-│       │   │   │   └── page.tsx
-│       │   │   └── api/         # Next.js API routes
-│       │   │       └── todos/
-│       │   ├── components/      # Reusable components
-│       │   │   ├── Navigation.tsx
-│       │   │   ├── DevToolsShowcase.tsx
-│       │   │   └── todos/       # Todo-specific components
-│       │   │       ├── Todos.tsx
-│       │   │       ├── TodosContainer.tsx
-│       │   │       └── TodoSkeleton.tsx
-│       │   ├── hooks/           # Custom React hooks
-│       │   │   └── todos/       # Todo-related hooks
-│       │   ├── constants/       # App constants
-│       │   │   └── api.ts
-│       │   ├── providers/       # React providers
-│       │   │   └── react-query/
-│       │   └── i18n/           # Internationalization
-│       ├── messages/           # Translation files
-│       │   └── en.json
-│       ├── public/            # Static assets
-│       │   ├── next.svg
-│       │   ├── vercel.svg
-│       │   └── *.svg
-│       ├── package.json
-│       ├── tsconfig.json
-│       ├── next.config.ts
-│       ├── postcss.config.mjs
-│       └── eslint.config.mjs
+│   ├── 🚀 backend/          # Fastify API Server
+│   └── 💻 frontend/         # Next.js React App
 ├── 📦 packages/
-│   └── 🔗 api/                 # Shared API Package
-│       ├── src/
-│       │   ├── index.ts        # Package exports
-│       │   ├── common.ts       # Common schemas (NotFound, etc.)
-│       │   └── todos.ts        # Todo Zod schemas and types
-│       ├── package.json        # Shared package dependencies
-│       └── tsconfig.json       # TypeScript config
-├── package.json                # Root workspace configuration
-├── .nvmrc                     # Node.js version
-└── .github/                   # GitHub workflows and templates
-    └── copilot-instructions.md
+│   └── 🔗 api/             # Shared API Package (Zod schemas & types)
+└── package.json            # Root workspace configuration
 ```
 
 ## 🛠️ Technology Stack
