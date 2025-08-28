@@ -46,7 +46,7 @@ This monorepo demonstrates the power of Chrome DevTools through practical, real-
 
 ### Frontend
 
-- **⚛️ Next.js 14+**: React with App Router
+- **⚛️ Next.js 15**: React with App Router and Turbopack
 - **🎨 Tailwind CSS 4**: Modern utility-first styling
 - **📡 Server-Side Rendering**: Performance optimization
 - **🔄 Optimistic Updates**: Smooth user experience
