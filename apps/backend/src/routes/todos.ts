@@ -75,4 +75,29 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
       reply.code(204);
       return todo;
     });
+
+  fastify.patch('/:id', {
+      schema: {
+        tags: ['todos'],
+        summary: 'Update a todo',
+        params: TodoParamsSchema,
+        body: TodoSchema.partial().omit({ id: true, createdAt: true, updatedAt: true }),
+        response: {
+          200: TodoSchema,
+          404: NotFoundSchema,
+        },
+      },
+    }, (request, reply) => {
+      const { id } = request.params;
+      const index = todos.findIndex(t => t.id === id);
+      const todo = todos[index];
+      if (!todo) {
+        reply.code(404);
+        return { message: `Todo with id ${id} not found` };
+      }
+      const { text, completed } = request.body;
+      const updatedTodo: Todo = { ...todo, text: text ?? todo.text, completed: completed ?? todo.completed, updatedAt: new Date() };
+      todos[index] = updatedTodo;
+      return updatedTodo;
+    });
 }

@@ -22,7 +22,7 @@ async function start() {
     await fastify.register(helmet);
     await fastify.register(cors, {
       origin: isProduction ? false : [frontendUrl],
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       credentials: true,
     });
 
