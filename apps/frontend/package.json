@@ -12,9 +12,13 @@
     "@devtools-demo/api": "file:../../packages/api",
     "@tanstack/react-query": "^5.85.5",
     "@tanstack/react-query-devtools": "^5.85.5",
+    "@tanstack/react-query-next-experimental": "^5.85.5",
+    "es-toolkit": "^1.39.10",
     "next": "15.5.0",
+    "next-intl": "^4.3.5",
     "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react-dom": "19.1.1",
+    "react-error-boundary": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

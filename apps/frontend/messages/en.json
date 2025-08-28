@@ -1,0 +1,34 @@
+{
+  "Navigation": {
+    "name": "DevTools Demo",
+    "openMenu": "Open main menu",
+    "links": {
+      "home": "Home",
+      "app": "Todo List"
+    }
+  },
+  "HomePage": {
+    "title": "Master Chrome",
+    "subtitle": "DevTools",
+    "description": "Discover the power of Chrome DevTools through interactive demos and real-world examples",
+    "exploreApp": "Explore the App",
+    "learnDevTools": "Learn DevTools",
+    "features": {
+      "title": "Chrome DevTools Features to Explore",
+      "list": {
+        "1": {
+          "title": "Network Monitoring",
+          "desc": "Monitor API calls, image loading, and performance metrics in real-time"
+        },
+        "2": {
+          "title": "Debugging",
+          "desc": "Set breakpoints, inspect variables, and debug JavaScript code efficiently"
+        },
+        "3": {
+          "title": "Performance",
+          "desc": "Analyze loading times, rendering performance, and optimize your app"
+        }
+      }
+    }
+  }
+}

@@ -1,14 +1,16 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const Navigation = () => {
   const pathname = usePathname();
+  const t = useTranslations('Navigation');
 
   const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/todos', label: 'Todo List' },
+    { href: '/', label: t('links.home') },
+    { href: '/todos', label: t('links.app') },
   ];
 
   return (
@@ -17,7 +19,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold text-gray-900">
-              DevTools Demo
+              {t('name')}
             </Link>
           </div>
           <div className="hidden md:block">
@@ -45,7 +47,7 @@ const Navigation = () => {
               aria-controls="mobile-menu"
               aria-expanded="false"
             >
-              <span className="sr-only">Open main menu</span>
+              <span className="sr-only">{t('openMenu')}</span>
               <svg
                 className="block h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
