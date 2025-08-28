@@ -25,6 +25,14 @@ chromeDevTools-are-you-confident-in-your-expertise/
 │       │   │   └── api/        # Next.js API routes
 │       │   └── components/     # Reusable React components
 │       ├── package.json        # Frontend dependencies
+├── packages/
+│   └── api/                    # Shared API schemas and types package
+│       ├── src/
+│       │   ├── index.ts        # Package exports
+│       │   ├── common.ts       # Common schemas (NotFound, etc.)
+│       │   └── todos.ts        # Todo-related Zod schemas and types
+│       ├── package.json        # Shared package dependencies
+│       └── tsconfig.json       # TypeScript config for package
 └── package.json                # Root workspace configuration
 ```
 
@@ -43,6 +51,22 @@ chromeDevTools-are-you-confident-in-your-expertise/
 - **TypeScript**: Full type safety
 - **Tailwind CSS**: Utility-first styling framework
 - **Server-Side Rendering (SSR)**: Performance optimization
+
+## Shared Packages
+
+### @devtools-demo/api Package
+- **Zod Schemas**: Type-safe API validation and schemas
+- **TypeScript Types**: Shared type definitions across frontend and backend
+- **Schema Validation**: Input validation for Todo operations
+- **Build System**: tsup for dual CommonJS/ESM output
+- **Type Safety**: Ensures consistent data structures across the monorepo
+
+#### Key Features:
+- **Todo Schemas**: Complete CRUD validation (Create, Read, Update, Delete)
+- **Common Schemas**: Shared error types (NotFound, etc.)
+- **Type Inference**: Automatic TypeScript type generation from Zod schemas
+- **Dual Export**: Supports both CommonJS and ES modules
+- **Version Management**: Centralized API contract versioning
 
 ## Key Features for DevTools Demonstration
 
@@ -103,22 +127,6 @@ const Component = ({ prop }: ComponentProps) => {
 };
 
 export default Component;
-```
-
-### API Design Patterns
-
-```typescript
-// Next.js API Route pattern
-export async function GET() {
-  try {
-    // Add artificial delays for DevTools demo
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    return NextResponse.json({ data, timestamp: new Date().toISOString() });
-  } catch (error) {
-    return NextResponse.json({ error: 'Message' }, { status: 500 });
-  }
-}
 ```
 
 ### DevTools Integration Features
