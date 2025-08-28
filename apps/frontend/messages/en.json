@@ -30,5 +30,10 @@
         }
       }
     }
+  },
+  "TodosPage": {
+    "title": "Todo List with SSR",
+    "subtitle": "This page demonstrates Server-Side Rendering (SSR) with Next.js. \nCheck the Network tab in Chrome DevTools to see the initial HTML response.",
+    "description": "SSR: Content rendered on server, then hydrated on client"
   }
 }
