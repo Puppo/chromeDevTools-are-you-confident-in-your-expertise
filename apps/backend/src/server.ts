@@ -2,10 +2,16 @@ import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
-import Fastify from 'fastify';
+import { default as Fastify } from 'fastify';
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { dbConnectionString } from './config/db';
 import { loggerConfig } from './config/logger';
 import { createRoutes } from './routes';
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const fastify = Fastify({
   logger: loggerConfig,
@@ -18,6 +24,10 @@ const frontendUrl = process.env['FRONTEND_URL'] || 'http://localhost:3000';
 
 async function start() {
   try {
+    await fastify.register(import('@fastify/postgres'), {
+      connectionString: dbConnectionString,
+      max: 20,
+    })
     // Register security plugins
     await fastify.register(helmet);
     await fastify.register(cors, {
@@ -49,6 +59,11 @@ async function start() {
         docExpansion: 'full',
         deepLinking: false,
       },
+    });
+
+    await fastify.register(import('@fastify/autoload'), {
+      dir: join(__dirname, 'services'),
+      matchFilter: /.*-plugin\.(ts|js)$/,
     });
 
     await fastify.register(createRoutes, {

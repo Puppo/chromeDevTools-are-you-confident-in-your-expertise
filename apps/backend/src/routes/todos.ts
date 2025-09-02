@@ -1,22 +1,13 @@
 import {
   CreateTodoSchema,
+  NoContent,
   NotFoundSchema,
   TodoParamsSchema,
   TodoSchema,
-  TodosSchema,
-  type Todo
+  TodosSchema
 } from "@devtools-demo/api";
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { randomUUID } from 'node:crypto';
-
-const todos: Todo[] = [
-  { id: randomUUID(), text: 'Open Chrome DevTools (F12)', completed: false, createdAt: new Date(), updatedAt: new Date() },
-  { id: randomUUID(), text: 'Go to Network tab', completed: false, createdAt: new Date(), updatedAt: new Date() },
-  { id: randomUUID(), text: 'Monitor API requests in real-time', completed: false, createdAt: new Date(), updatedAt: new Date() },
-  { id: randomUUID(), text: 'Check Performance tab for metrics', completed: false, createdAt: new Date(), updatedAt: new Date() },
-  { id: randomUUID(), text: 'Use Console for debugging', completed: false, createdAt: new Date(), updatedAt: new Date() },
-];
 
 export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
   const fastify = app.withTypeProvider<ZodTypeProvider>();
@@ -28,7 +19,10 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
           200: TodosSchema,
         },
       },
-    }, () => todos);
+    }, async () => {
+      const result = await fastify.todoService.getTodos()
+      return result;
+    });
 
   fastify.post('/', {
       schema: {
@@ -39,16 +33,12 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
           201: TodoSchema,
         },
       },
-    }, (request, reply) => {
+    }, async (request, reply) => {
       const { text, completed } = request.body;
-      const newTodo: Todo = {
-        id: randomUUID(),
+      const newTodo = await fastify.todoService.createTodo({
         text,
-        completed,
-        updatedAt: new Date(),
-        createdAt: new Date(),
-      };
-      todos.push(newTodo);
+        completed: completed,
+      });
       reply.code(201);
       return newTodo;
     });
@@ -59,21 +49,13 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
         summary: 'Delete a todo',
         params: TodoParamsSchema,
         response: {
-          204: TodoSchema,
+          204: NoContent,
           404: NotFoundSchema,
         },
       },
-    }, (request, reply) => {
-      const { id } = request.params;
-      const index = todos.findIndex(t => t.id === id);
-      const todo = todos[index];
-      if (index === -1) {
-        reply.code(404);
-        return { message: `Todo with id ${id} not found` };
-      }
-      todos.splice(index, 1);
-      reply.code(204);
-      return todo;
+    }, async (request, reply) => {
+      await fastify.todoService.deleteTodo(request.params.id);
+      return reply.code(204).send();
     });
 
   fastify.patch('/:id', {
@@ -81,23 +63,19 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
         tags: ['todos'],
         summary: 'Update a todo',
         params: TodoParamsSchema,
-        body: TodoSchema.partial().omit({ id: true, createdAt: true, updatedAt: true }),
+        body: TodoSchema.omit({ id: true, createdAt: true, updatedAt: true }).partial(),
         response: {
           200: TodoSchema,
           404: NotFoundSchema,
         },
       },
-    }, (request, reply) => {
+    }, async (request, reply) => {
       const { id } = request.params;
-      const index = todos.findIndex(t => t.id === id);
-      const todo = todos[index];
-      if (!todo) {
+      const updatedTodo = await fastify.todoService.updateTodo(id, request.body);
+      if (!updatedTodo) {
         reply.code(404);
         return { message: `Todo with id ${id} not found` };
       }
-      const { text, completed } = request.body;
-      const updatedTodo: Todo = { ...todo, text: text ?? todo.text, completed: completed ?? todo.completed, updatedAt: new Date() };
-      todos[index] = updatedTodo;
       return updatedTodo;
     });
 }
