@@ -15,19 +15,25 @@ interface TodosContainerProps {
 export const TodosContainer = ({ todos: todosInit }: TodosContainerProps) => {
   const formatter = useFormatter();
 
+  // console.log('Rendering TodosContainer with todos:', todosInit);
+  // console.table(todosInit);
+  // console.table(todosInit, ['id', 'text', 'completed']);
+
   const [todos, setTodos] = useState(todosInit);
   const [newTodoText, setNewTodoText] = useState('');
   const [isAdding, setIsAdding] = useState(false);
-  const [isUpdating, setIsUpdating] = useState<string | null>(null);
+  const [isUpdating, setIsUpdating] = useState<Todo['id'] | null>(null);
   
   const createMutation = useCreateTodo();
   const deleteMutation = useDeleteTodo();
   const updateMutation = useUpdateTodo();
 
   const addTodo = async (e: React.FormEvent) => {
+    console.groupCollapsed('Add Todo');
     e.preventDefault();
     if (!newTodoText.trim()) return;
     setIsAdding(true);
+    console.log('setIsAdding(true)');
 
     const tempTodo: Todo = {
       id: `temp-${Date.now()}`,
@@ -39,29 +45,37 @@ export const TodosContainer = ({ todos: todosInit }: TodosContainerProps) => {
     
     setTodos(prev => [...prev, tempTodo]);
     setNewTodoText('');
+    console.log('Optimistically added todo:', tempTodo);
     try {
       const result = await createMutation.mutateAsync({ text: tempTodo.text })
       setTodos(prev => prev.map(t => t.id === tempTodo.id ? result : t));
+      console.log('Successfully added todo:', result);
     } catch (error) {
       setTodos(prev => prev.filter(t => t.id !== tempTodo.id));
       console.error('Error adding todo:', error);
     }
     finally {
       setIsAdding(false);
+      console.log('setIsAdding(false)');
     }
+    console.groupEnd();
   };
 
-  const toggleTodo = async (id: string) => {
+  const toggleTodo = async (id: Todo['id']) => {
+    console.group('Toggle Todo');
     const todo = todos.find(t => t.id === id);
     if (!todo) return;
+    console.log('Toggling todo:', todo);
 
     setIsUpdating(id);
+    console.log(`setIsUpdating(${id})`);
     
     setTodos(prev =>
       prev.map(t =>
         t.id === id ? { ...t, completed: !t.completed } : t
       )
     );
+    console.log('Optimistically updated todo:', { ...todo, completed: !todo.completed });
 
     try {
       const updatedTodo = await updateMutation.mutateAsync({ id, completed: !todo.completed });
@@ -71,8 +85,8 @@ export const TodosContainer = ({ todos: todosInit }: TodosContainerProps) => {
           t.id === id ? updatedTodo : t
         )
       );
+      console.log('Successfully updated todo:', updatedTodo);
     } catch (error) {
-      // Revert optimistic update on failure
       setTodos(prev =>
         prev.map(t =>
           t.id === id ? { ...t, completed: todo.completed } : t
@@ -81,18 +95,23 @@ export const TodosContainer = ({ todos: todosInit }: TodosContainerProps) => {
       console.error('Error updating todo:', error);
     } finally {
       setIsUpdating(null);
+      console.log('setIsUpdating(null)');
     }
+    console.groupEnd();
   };
 
   const deleteTodo = async (id: string) => {
-    // Optimistic update
+    console.group('Delete Todo');
+    console.log('Deleting todo with id:', id);
     const todoIndex = todos.findIndex(t => t.id === id);
     if (todoIndex === -1) return;
     const todo = todos[todoIndex];
     setTodos(prev => prev.filter(t => t.id !== todo.id));
+    console.log('Optimistically deleted todo:', todo);
 
     try {
       await deleteMutation.mutateAsync({ id });
+      console.log('Successfully deleted todo with id:', id);
     } catch (error) {
       // Revert optimistic update on failure
       setTodos(prev => {
@@ -102,6 +121,7 @@ export const TodosContainer = ({ todos: todosInit }: TodosContainerProps) => {
       });
       console.error('Error deleting todo:', error);
     }
+    console.groupEnd();
 
   };
 

@@ -1,5 +1,4 @@
 import { getTodos } from '@/api/todos';
-import DevToolsShowcase from '@/components/DevToolsShowcase';
 import { Todos } from '@/components/todos/Todos';
 import { QUERY_KEYS } from '@/constants/api';
 import { getQueryClient } from '@/providers/react-query/get-query-client';
@@ -37,8 +36,6 @@ export default async function TodosPage() {
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Todos />
         </HydrationBoundary>
-
-        <DevToolsShowcase />
       </div>
     </div>
   );
