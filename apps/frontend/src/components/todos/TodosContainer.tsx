@@ -270,22 +270,6 @@ export const TodosContainer = ({ todos: todosInit }: TodosContainerProps) => {
           ))
         )}
       </div>
-
-      {/* DevTools Tips */}
-      <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-        <h3 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          Chrome DevTools Tips
-        </h3>
-        <ul className="text-sm text-blue-800 space-y-1">
-          <li>• Open DevTools (F12) and go to Network tab when adding todos</li>
-          <li>• Check the Console for any JavaScript errors or logs</li>
-          <li>• Use Elements tab to inspect the todo components</li>
-          <li>• Performance tab shows rendering and interaction metrics</li>
-        </ul>
-      </div>
     </div>
   );
 }

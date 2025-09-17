@@ -32,8 +32,8 @@
     }
   },
   "TodosPage": {
-    "title": "Todo List with SSR",
-    "subtitle": "This page demonstrates Server-Side Rendering (SSR) with Next.js. \nCheck the Network tab in Chrome DevTools to see the initial HTML response.",
-    "description": "SSR: Content rendered on server, then hydrated on client"
+    "title": "Chrome DevTools todos",
+    "subtitle": "We will use this list to demonstrate various Chrome DevTools features",
+    "description": "Enjoy the interactive demo and enhance your DevTools skills!"
   }
 }
