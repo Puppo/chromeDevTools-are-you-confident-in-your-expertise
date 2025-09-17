@@ -12,8 +12,10 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "type-check": "tsc --noEmit",
-    "db:migrate": "postgrator --config .postgratorrc.json",
-    "db:rollback": "postgrator --config .postgratorrc.json --undo"
+    "db:migrate": "postgrator --config ./migrations/.postgratorrc.json",
+    "db:migrate:rollback": "postgrator --config ./migrations/.postgratorrc.json --undo",
+    "db:seed": "postgrator --config ./seeds/.postgratorrc.json",
+    "db:seed:rollback": "postgrator --config ./seeds/.postgratorrc.json --undo"
   },
   "dependencies": {
     "@devtools-demo/api": "file:../../packages/api",

@@ -1,0 +1,15 @@
+INSERT INTO todos (text) VALUES
+('Beyond console.log(): Smarter Logging with Logpoints'),
+('Debug code'),
+('CSS Shadow Editing'),
+('Measure Unused Script & CSS'),
+('Emulate Focus'),
+('Rendering Behavior'),
+('Capture Node Screenshots'),
+('Throttle Network'),
+('Override request'),
+('Snippets'),
+('Mobile Device Simulation'),
+('Workspace'),
+('AI Assistance'),
+('Performance Debugging');
