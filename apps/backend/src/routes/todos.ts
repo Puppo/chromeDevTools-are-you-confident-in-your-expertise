@@ -1,5 +1,6 @@
 import {
   CreateTodoSchema,
+  NoContent,
   NotFoundSchema,
   TodoParamsSchema,
   TodoSchema,
@@ -69,7 +70,7 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
         summary: 'Delete a todo',
         params: TodoParamsSchema,
         response: {
-          204: { type: 'null', description: 'Todo deleted successfully' },
+          204: NoContent,
           404: NotFoundSchema,
         },
       },
