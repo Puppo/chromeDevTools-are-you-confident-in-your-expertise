@@ -62,4 +62,26 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
       }
       return updatedTodo;
     });
+
+  fastify.delete('/:id', {
+      schema: {
+        tags: ['todos'],
+        summary: 'Delete a todo',
+        params: TodoParamsSchema,
+        response: {
+          204: { type: 'null' },
+          404: NotFoundSchema,
+        },
+      },
+    }, async (request, reply) => {
+      const { id } = request.params;
+      try {
+        await fastify.todoService.deleteTodo(id);
+        reply.code(204);
+        return;
+      } catch (error) {
+        reply.code(404);
+        return { message: `Todo with id ${id} not found` };
+      }
+    });
 }
