@@ -103,3 +103,5 @@ temp/
 
 # TernJS port file
 .tern-port
+
+.gemini/settings.json
