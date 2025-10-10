@@ -1,5 +1,6 @@
 import {
   CreateTodoSchema,
+  NoContent,
   NotFoundSchema,
   TodoParamsSchema,
   TodoSchema,
@@ -61,5 +62,27 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
         return { message: `Todo with id ${id} not found` };
       }
       return updatedTodo;
+    });
+
+  fastify.delete('/:id', {
+      schema: {
+        tags: ['todos'],
+        summary: 'Delete a todo',
+        params: TodoParamsSchema,
+        response: {
+          204: NoContent,
+          404: NotFoundSchema,
+        },
+      },
+    }, async (request, reply) => {
+      const { id } = request.params;
+      try {
+        await fastify.todoService.deleteTodo(id);
+        reply.code(204);
+        return;
+      } catch {
+        reply.code(404);
+        return { message: `Todo with id ${id} not found` };
+      }
     });
 }
