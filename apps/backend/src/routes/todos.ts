@@ -1,12 +1,15 @@
 import {
   CreateTodoSchema,
+  InternalServerErrorSchema,
   NotFoundSchema,
+  NoContent,
   TodoParamsSchema,
   TodoSchema,
   TodosSchema
 } from "@devtools-demo/api";
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import { NotFoundError } from '../errors';
 
 export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
   const fastify = app.withTypeProvider<ZodTypeProvider>();
@@ -61,5 +64,37 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
         return { message: `Todo with id ${id} not found` };
       }
       return updatedTodo;
+    });
+
+  fastify.delete('/:id', {
+      schema: {
+        tags: ['todos'],
+        summary: 'Delete a todo',
+        params: TodoParamsSchema,
+        response: {
+          204: NoContent,
+          404: NotFoundSchema,
+          500: InternalServerErrorSchema,
+        },
+      },
+    }, async (request, reply) => {
+      const { id } = request.params;
+      try {
+        await fastify.todoService.deleteTodo(id);
+        reply.code(204);
+        return;
+      } catch (error) {
+        fastify.log.error({ error, todoId: id }, 'Failed to delete todo');
+        
+        // Check if it's a "not found" error
+        if (error instanceof NotFoundError) {
+          reply.code(404);
+          return { message: `Todo with id ${id} not found` };
+        }
+        
+        // For other errors, return 500
+        reply.code(500);
+        return { message: 'Internal server error' };
+      }
     });
 }

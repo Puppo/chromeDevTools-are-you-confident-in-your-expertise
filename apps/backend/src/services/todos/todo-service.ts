@@ -1,6 +1,7 @@
 import { type Todo } from '@devtools-demo/api';
 import type { PostgresDb } from '@fastify/postgres';
 import SQL from '@nearform/sql';
+import { NotFoundError } from '../../errors';
 
 interface TodoTable {
   id: string;
@@ -66,7 +67,7 @@ export function todoService(pg: PostgresDb) {
   async function deleteTodo(id: TodoTable['id']): Promise<void> {
     const result = await pg.query(SQL`DELETE FROM todos WHERE id = ${id}`);
     if (result.rowCount === 0) {
-      throw new Error(`Todo with id ${id} not found`);
+      throw new NotFoundError(`Todo with id ${id} not found`);
     }
   }
 
