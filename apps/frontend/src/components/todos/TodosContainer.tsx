@@ -18,6 +18,7 @@ export const TodosContainer = ({ todos: todosInit }: TodosContainerProps) => {
   // console.log('Rendering TodosContainer with todos:', todosInit);
   // console.table(todosInit);
   // console.table(todosInit, ['id', 'text', 'completed']);
+  // todosInit[0].completed = true;
 
   const [todos, setTodos] = useState(todosInit);
   const [newTodoText, setNewTodoText] = useState('');
