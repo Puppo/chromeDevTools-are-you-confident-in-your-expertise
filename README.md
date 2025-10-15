@@ -79,11 +79,12 @@ cd chromeDevTools-are-you-confident-in-your-expertise
 # Install dependencies for all workspaces
 npm install
 
-# Start the backend server
-npm run dev:backend
+docker compose up -d
 
-# In a new terminal, start the frontend
-npm run dev:frontend
+npm run migration
+npm run seed
+
+npm run dev
 ```
 
 ### 🌐 Accessing the App

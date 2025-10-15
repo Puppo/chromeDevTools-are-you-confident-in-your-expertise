@@ -8,6 +8,8 @@
     "packages/*"
   ],
   "scripts": {
+    "migration": "npm run db:migrate --workspace=apps/backend",
+    "seed": "npm run db:seed --workspace=apps/backend",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "npm run dev --workspace=apps/backend",
     "dev:frontend": "npm run dev --workspace=apps/frontend",
