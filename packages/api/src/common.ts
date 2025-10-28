@@ -4,4 +4,8 @@ export const NotFoundSchema = z.object({
   message: z.string(),
 });
 
+export const InternalServerErrorSchema = z.object({
+  message: z.string(),
+});
+
 export const NoContent = z.never();
