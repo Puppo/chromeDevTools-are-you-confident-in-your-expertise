@@ -80,12 +80,10 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
         reply.code(204);
         return;
       } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        if (errorMessage.includes('not found')) {
+        if (error instanceof Error && error.message.includes('not found')) {
           reply.code(404);
           return { message: `Todo with id ${id} not found` };
         }
-        fastify.log.error(error, 'Error deleting todo');
         throw error;
       }
     });
