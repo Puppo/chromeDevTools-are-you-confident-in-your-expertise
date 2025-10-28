@@ -81,18 +81,17 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
       const { id } = request.params;
       try {
         await fastify.todoService.deleteTodo(id);
-        reply.code(204);
-        return;
+        return reply.code(204).send();
       } catch (error) {
-        fastify.log.error({ error, todoId: id }, 'Failed to delete todo');
-        
         // Check if it's a "not found" error
         if (error instanceof NotFoundError) {
+          fastify.log.info({ todoId: id }, 'Todo not found');
           reply.code(404);
           return { message: `Todo with id ${id} not found` };
         }
         
         // For other errors, return 500
+        fastify.log.error({ error, todoId: id }, 'Failed to delete todo');
         reply.code(500);
         return { message: 'Internal server error' };
       }
