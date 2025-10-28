@@ -79,9 +79,14 @@ export const  todoRoutes: FastifyPluginAsyncZod = async function (app) {
         await fastify.todoService.deleteTodo(id);
         reply.code(204);
         return;
-      } catch {
-        reply.code(404);
-        return { message: `Todo with id ${id} not found` };
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        if (errorMessage.includes('not found')) {
+          reply.code(404);
+          return { message: `Todo with id ${id} not found` };
+        }
+        fastify.log.error(error, 'Error deleting todo');
+        throw error;
       }
     });
 }
