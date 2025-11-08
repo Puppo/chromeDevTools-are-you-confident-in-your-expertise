@@ -8,23 +8,20 @@
     "packages/*"
   ],
   "scripts": {
-    "migration": "npm run db:migrate --workspace=apps/backend",
-    "seed": "npm run db:seed --workspace=apps/backend",
+    "migration": "npm run --workspace=\"{packages,apps}/**\" --if-present db:migrate",
+    "seed": "npm run --workspace=\"{packages,apps}/**\" --if-present db:seed",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "npm run dev --workspace=apps/backend",
     "dev:frontend": "npm run dev --workspace=apps/frontend",
     "dev:api": "npm run dev --workspace=packages/api",
-    "build": "npm run build --workspace=packages/api && npm run build --workspace=apps/backend && npm run build --workspace=apps/frontend",
-    "build:api": "npm run build --workspace=packages/api",
-    "build:backend": "npm run build --workspace=apps/backend",
-    "build:frontend": "npm run build --workspace=apps/frontend",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:backend": "npm run start --workspace=apps/backend",
     "start:frontend": "npm run start --workspace=apps/frontend",
-    "lint": "npm run lint --workspace=apps/backend && npm run lint --workspace=apps/frontend",
-    "type-check": "npm run type-check --workspace=packages/api && npm run type-check --workspace=apps/backend && npm run type-check --workspace=apps/frontend",
-    "test": "npm run test --workspace=apps/backend && npm run test --workspace=apps/frontend",
-    "clean": "rm -rf node_modules packages/*/node_modules packages/*/dist apps/*/node_modules apps/*/dist apps/*/.next"
+    "build": "npm run --workspace=\"{packages,apps}/**\" --if-present build",
+    "lint": "npm run --workspace=\"{packages,apps}/**\" --if-present lint",
+    "type-check": "npm run --workspace=\"{packages,apps}/**\" --if-present type-check",
+    "test": "npm run --workspace=\"{packages,apps}/**\" --if-present test",
+    "clean": "rm -rf node_modules {packages,apps}/*/node_modules {packages,apps}/*/dist apps/*/.next"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
