@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  reactCompiler: true,
 };
 
 const withNextIntl = createNextIntlPlugin();
