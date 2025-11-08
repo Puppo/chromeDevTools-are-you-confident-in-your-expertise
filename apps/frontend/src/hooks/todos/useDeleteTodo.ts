@@ -10,7 +10,7 @@ export const useDeleteTodo = () => {
   const mutation = useMutation<void, unknown, TodoParams>({
     mutationFn: ({ id }) => deleteTodo(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.TODOS });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.TODOS.key });
     },
   });
 

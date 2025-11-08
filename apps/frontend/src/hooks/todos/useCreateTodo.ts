@@ -10,7 +10,7 @@ export const useCreateTodo = () => {
   const mutation = useMutation<Todo, unknown, Omit<CreateTodo, 'completed'>>({
     mutationFn: ({ text }) => createTodo(text),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.TODOS });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.TODOS.key });
     },
   });
 

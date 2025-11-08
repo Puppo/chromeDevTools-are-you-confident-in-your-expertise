@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const useGetTodos = () => {
   const { data: todos } = useSuspenseQuery({
-    queryKey: [QUERY_KEYS.TODOS],
+    queryKey: [QUERY_KEYS.TODOS.key],
     queryFn: getTodos,
   });
 

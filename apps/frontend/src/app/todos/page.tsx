@@ -9,7 +9,7 @@ export default async function TodosPage() {
   const t = await getTranslations('TodosPage');
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery({
-    queryKey: QUERY_KEYS.TODOS,
+    queryKey: QUERY_KEYS.TODOS.key,
     queryFn: getTodos,
   });
 
