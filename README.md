@@ -66,7 +66,7 @@ This monorepo demonstrates the power of Chrome DevTools through practical, real-
 ### Prerequisites
 
 - **Node.js 18+**
-- **npm or yarn**
+- **pnpm**
 - **Google Chrome** (latest version recommended)
 
 ### Installation
@@ -77,14 +77,14 @@ git clone <repository-url>
 cd chromeDevTools-are-you-confident-in-your-expertise
 
 # Install dependencies for all workspaces
-npm install
+pnpm install
 
 docker compose up -d
 
-npm run migration
-npm run seed
+pnpm run migration
+pnpm run seed
 
-npm run dev
+pnpm run dev
 ```
 
 ### 🌐 Accessing the App

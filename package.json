@@ -8,24 +8,19 @@
     "packages/*"
   ],
   "scripts": {
-    "migration": "npm run --workspace=\"{packages,apps}/**\" --if-present db:migrate",
-    "seed": "npm run --workspace=\"{packages,apps}/**\" --if-present db:seed",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:backend": "npm run dev --workspace=apps/backend",
-    "dev:frontend": "npm run dev --workspace=apps/frontend",
-    "dev:api": "npm run dev --workspace=packages/api",
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "start:backend": "npm run start --workspace=apps/backend",
-    "start:frontend": "npm run start --workspace=apps/frontend",
-    "build": "npm run --workspace=\"{packages,apps}/**\" --if-present build",
-    "lint": "npm run --workspace=\"{packages,apps}/**\" --if-present lint",
-    "type-check": "npm run --workspace=\"{packages,apps}/**\" --if-present type-check",
-    "test": "npm run --workspace=\"{packages,apps}/**\" --if-present test",
+    "migration": "pnpm --workspace=\"{packages,apps}/**\" --if-present run db:migrate",
+    "seed": "pnpm --workspace=\"{packages,apps}/**\" --if-present run db:seed",
+    "dev": "pnpm run --parallel dev",
+    "start": "pnpm --filter @devtools-demo/api run build && pnpm run --parallel start",
+    "build": "pnpm run -r build",
+    "lint": "pnpm --workspace=\"{packages,apps}/**\" --if-present run lint",
+    "type-check": "pnpm --workspace=\"{packages,apps}/**\" --if-present run type-check",
+    "test": "pnpm --workspace=\"{packages,apps}/**\" --if-present run test",
     "clean": "rm -rf node_modules {packages,apps}/*/node_modules {packages,apps}/*/dist apps/*/.next"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "typescript": "^5.5.4"
+    "concurrently": "catalog:",
+    "typescript": "catalog:"
   },
   "keywords": [
     "chrome-devtools",
@@ -39,7 +34,7 @@
   "author": "Luca Del Puppo",
   "license": "MIT",
   "engines": {
-    "node": ">=22.0.0",
-    "npm": ">=10.0.0"
-  }
+    "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@10.22.0"
 }

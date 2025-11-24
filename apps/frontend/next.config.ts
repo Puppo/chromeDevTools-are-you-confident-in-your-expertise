@@ -13,7 +13,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  reactCompiler: true,
+  experimental: {
+    reactCompiler: true,
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
