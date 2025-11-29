@@ -8,14 +8,14 @@
     "packages/*"
   ],
   "scripts": {
-    "migration": "pnpm --workspace=\"{packages,apps}/**\" --if-present run db:migrate",
-    "seed": "pnpm --workspace=\"{packages,apps}/**\" --if-present run db:seed",
+    "migration": "pnpm -r --if-present run db:migrate",
+    "seed": "pnpm -r --if-present run db:seed",
     "dev": "pnpm run --parallel dev",
     "start": "pnpm --filter @devtools-demo/api run build && pnpm run --parallel start",
     "build": "pnpm run -r build",
-    "lint": "pnpm --workspace=\"{packages,apps}/**\" --if-present run lint",
-    "type-check": "pnpm --workspace=\"{packages,apps}/**\" --if-present run type-check",
-    "test": "pnpm --workspace=\"{packages,apps}/**\" --if-present run test",
+    "lint": "pnpm -r --if-present run lint",
+    "type-check": "pnpm -r --if-present run type-check",
+    "test": "pnpm -r --if-present run test",
     "clean": "rm -rf node_modules {packages,apps}/*/node_modules {packages,apps}/*/dist apps/*/.next"
   },
   "devDependencies": {
